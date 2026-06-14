@@ -1,4 +1,3 @@
-# src/predict.py
 import numpy as np
 from xgboost import XGBClassifier
 
