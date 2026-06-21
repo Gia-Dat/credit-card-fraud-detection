@@ -1,0 +1,9 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.18
+    hooks:
+      # Run the linter to catch unused imports, syntax issues, and bug patterns
+      - id: ruff
+        args: [ --fix ]
+      # Run the formatter to auto-format spacings and layout
+      - id: ruff-format

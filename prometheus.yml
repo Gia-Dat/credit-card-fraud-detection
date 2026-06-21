@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 5s # Scrape metrics every 5 seconds for fast updates
+
+scrape_configs:
+  - job_name: 'evidently-monitoring'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['host.docker.internal:8050']

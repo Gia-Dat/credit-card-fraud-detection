@@ -1,0 +1,16 @@
+artifact_path: fraud_model
+flavors:
+  python_function:
+    data: model.xgb
+    env: conda.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.12.12
+  xgboost:
+    code: null
+    data: model.xgb
+    model_class: xgboost.sklearn.XGBClassifier
+    xgb_version: 3.2.0
+mlflow_version: 1.27.0
+model_uuid: 738fd25724b04abca3b56711049b5266
+run_id: 2577942e1a3d48589b3b6fa998b82b49
+utc_time_created: '2026-06-21 17:07:18.397787'

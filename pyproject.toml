@@ -3,16 +3,42 @@ name = "credit-card-fraud-detection"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = "==3.12.12"
 dependencies = [
+    "boto3>=1.43.34",
+    "evidently>=0.7.21",
     "fastapi>=0.137.0",
     "matplotlib>=3.11.0",
     "mlflow>=1.27.0",
     "numpy>=2.4.6",
     "pandas>=3.0.3",
+    "pip>=26.1.2",
+    "prometheus-client>=0.25.0",
     "protobuf>=4.25.3,<5.0.0",
     "scikit-learn>=1.9.0",
     "seaborn>=0.13.2",
+    "setuptools<70",
     "uvicorn>=0.49.0",
     "xgboost>=3.2.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6.0",
+    "pytest>=9.1.1",
+    "ruff>=0.15.18",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+
+[tool.ruff.lint]
+# Enable Pyflakes (F), pycodestyle (E, W), and isort (I) rules
+select = ["E", "W", "F", "I"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+# Force PyTest to add the root folder to the Python path during execution
+pythonpath = ["."]
+testpaths = ["tests"]

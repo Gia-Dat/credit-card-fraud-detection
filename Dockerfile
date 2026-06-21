@@ -1,14 +1,29 @@
-FROM python:3.14-slim
+# Use a lightweight, official Python base image
+FROM python:3.12-slim
 
+# Set system environment settings
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PORT=8000
+
+# Set our working folder inside the container
 WORKDIR /app
 
-COPY requirements.txt .
+# Install uv globally inside the container for lightning-fast dependency loading
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy only dependency files first to maximize Docker caching speed
+COPY pyproject.toml uv.lock ./
 
-COPY src/ /app/src/
-COPY models/ /app/models/
+# Install project dependencies strictly matching our lockfile
+RUN uv sync --frozen --no-cache
 
+# Copy your source code and exported model binaries into the image
+COPY src/ ./src/
+COPY models/ ./models/
+
+# Expose the API port to your local machine
 EXPOSE 8000
 
-CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Fire up the production web server using our virtual environment launcher
+CMD ["uv", "run", "uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
